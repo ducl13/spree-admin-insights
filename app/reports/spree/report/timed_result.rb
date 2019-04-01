@@ -15,7 +15,9 @@ module Spree
       def populate_observations
         @results.each do |result|
           matching_observation = @observations.find { |observation| observation.describes? result, time_scale }
-          matching_observation.populate result
+          unless matching_observation.nil?
+            matching_observation.populate result
+          end
         end
       end
 
