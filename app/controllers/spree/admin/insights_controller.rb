@@ -5,6 +5,18 @@ module Spree
       before_action :set_reporting_period, only: [:index, :show, :download]
       before_action :load_reports, only: [:index, :show]
 
+      def authorize_admin
+        record = if respond_to?(:model_class, true) && model_class
+                   model_class
+                 else
+                   controller_name.to_sym
+                 end
+        return if try_spree_current_user.try(:has_spree_role?, 'marketing')
+
+        authorize! :admin, record
+        authorize! action, record
+      end
+
       def index
         respond_to do |format|
           format.html
