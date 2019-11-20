@@ -68,7 +68,7 @@ module Spree
       Spree::PromotionAction
         .joins(:promotion)
         .joins(:adjustment)
-        .where(spree_adjustments: { created_at: reporting_period })
+        .where(spree_adjustments: { created_at: reporting_period, state: 'closed' })
         .select(
           'spree_promotions.starts_at   as promotion_start_date',
           'spree_promotions.expires_at  as promotion_end_date',
