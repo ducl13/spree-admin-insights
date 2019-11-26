@@ -92,7 +92,7 @@ module Spree
       line_item_ar = Spree::LineItem.arel_table
       Spree::Order
         .where.not(completed_at: nil)
-        .where(completed_at: reporting_period)
+        .where(state: 'completed', completed_at: reporting_period)
         .joins(:line_items)
         .group('spree_orders.id', *time_scale_columns_to_s)
         .select(
